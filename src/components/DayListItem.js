@@ -3,11 +3,13 @@ import "components/DayListItem.scss";
 import classNames from "classnames";
 
 export default function DayListItem(props) {
+  //Gives styles based on conditions
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": props.selected,
     "day-list__item--full": props.spots === 0
   });
 
+  //If condition is met it will change the text shown to the user
   const formatSpots = () => {
     if(props.spots === 0) {
       return <h3 className="text--light">no spots remaining</h3>
