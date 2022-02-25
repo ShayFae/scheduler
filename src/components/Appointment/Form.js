@@ -5,6 +5,7 @@ import "components/Appointment/Form.scss";
 
 export default function Form(props) {
 const {interviewers} = props
+// console.log('this is form props', props)
 
 //STATES
 const [student, setStudent] = useState(props.student || "");

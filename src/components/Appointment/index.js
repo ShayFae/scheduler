@@ -4,8 +4,12 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 
+
 export default function Appointment(props) {
-  const {interview, time, student, interviewer} = props
+  const {interview, time} = props
+  // console.log('this is index', props)
+  // console.log(interview)
+  // console.log(student)
   // function pickDisplay(props) { 
   //     return (interview ? <Show></Show> : <Empty></Empty>);
   //   }
@@ -14,7 +18,7 @@ export default function Appointment(props) {
       <article className="appointment">
         <Header time={time}/>
         {/* {pickDisplay()} */}
-        {interview ? <Show student={student} interviewer={interviewer}></Show> : <Empty></Empty>}
+        {interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}></Show> : <Empty></Empty>}
       </article>
     </Fragment>
 
