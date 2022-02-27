@@ -25,9 +25,28 @@ export function getAppointmentsForDay(state, day) {
   // console.log(matchData)
 }
 
+export function getInterviewersForDay(state, day) {
+  const interviewerFilter = state.days.filter(days => days.name === day);
+  let interviewersData = [];
+  for(let interviewersVal of interviewerFilter) { 
+    let InterviewersApp = interviewersVal.appointments
+    let stateApp = state.interviewers
+    for (const [key, appointValue] of Object.entries(stateApp)) {
+    let findMatch = [appointValue] 
+    findMatch.forEach(x => { 
+      if(InterviewersApp.includes(x.id)) {
+        interviewersData.push(x)
+      }
+    })
+    }
+  }
+  // console.log('this is match', matchData)
+  return interviewersData
+}
+
 export function getInterview(state, interview) {
   let obj = {}
-  console.log('this is', interview)
+  // console.log('this is', interview)
   if(interview === null) {
     return null
   }
@@ -40,7 +59,7 @@ export function getInterview(state, interview) {
   // console.log(interviewers)
   obj["interviewer"] = justInterviewer[0]
   obj["student"] = justStudent[1].name;
-  console.log(obj)
+  // console.log(obj)
   return obj;
   // console.log('this is test',justInterviewers[0])
   // console.log(state.interviewer)

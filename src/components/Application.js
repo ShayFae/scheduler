@@ -3,7 +3,9 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay } from "../helpers/selectors.js"
+import { getAppointmentsForDay } from "../helpers/selectors.js";
+import { getInterviewersForDay  } from "../helpers/selectors.js";
+// import { getInterview } from "../helpers/selectors.js";
 
 export default function Application(props) {
 
@@ -16,18 +18,14 @@ export default function Application(props) {
   });
   // console.log(state.interviewers)
 
-  let dailyAppointments = getAppointmentsForDay(state, state.day)
-
+  const dailyAppointments = getAppointmentsForDay(state, state.day)
+  const interviewers = getInterviewersForDay(state, state.day);
   //SATE FUNCTIONS
   const setDay = day => setState({ ...state, day });
-  // const setDays = (days) => {
-  //   setState(prev => ({ ...prev, days }));
-  // }
 
-  // console.log(dailyAppointments)
   const appointmentsList = dailyAppointments.map(appointment => {  
       // const interview = getInterview(state, appointment.interview); 
-      return (<Appointment key={appointment.id} {...appointment} />);
+      return (<Appointment key={appointment.id} {...appointment} interviewers={interviewers}/>);
     });
   // console.log(appointmentsList)
 
@@ -41,6 +39,7 @@ export default function Application(props) {
     ]).then((all) => {
       // console.log(all[1].data); 
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+      
     });
     });
   }, []);
