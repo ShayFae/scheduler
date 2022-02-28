@@ -12,6 +12,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
 
@@ -33,6 +34,13 @@ export default function Appointment(props) {
     // console.log('STUDENT', interview.student)
     // console.log('interviewer', interview.interviewer)
   };
+
+  function cancel() {
+    transition(DELETING);
+
+      props.cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+  }
  
   return (
     <Fragment>
@@ -44,8 +52,10 @@ export default function Appointment(props) {
           <Show
             student={props.interview.student}
             interviewer={props.interview.interviewer}
+            onDelete={cancel}
           />
         )}
+         {mode === DELETING && <Status message="DELETING" />}
         {mode === SAVING && <Status message="SAVING" />}
         {mode === CREATE && (<Form interviewers={interviewers}  onCancel={() => back(EMPTY)} onSave={save}/>)}       
         {/* {interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}></Show> : <Empty></Empty>} */}
