@@ -3,9 +3,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay } from "../helpers/selectors.js";
-import { getInterviewersForDay  } from "../helpers/selectors.js";
-// import { getInterview } from "../helpers/selectors.js";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
 
@@ -20,13 +18,48 @@ export default function Application(props) {
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const interviewers = getInterviewersForDay(state, state.day);
+  // console.log('interviewers', interviewers)
   //SATE FUNCTIONS
   const setDay = day => setState({ ...state, day });
 
+  function bookInterview(id, interview) {
+    // console.log(id, interview)
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // setState({...state, appointments});
+    // console.log(appointments)
+    // console.log(appointments.time)
+    // console.log('APPOINTMENT', appointment)
+
+     return axios.put(`/api/appointments/${id}`, {interview}).then(() => {
+      setState({...state, appointments});
+     })
+   };
+
+
+  //  { interview }
   const appointmentsList = dailyAppointments.map(appointment => {  
-      // const interview = getInterview(state, appointment.interview); 
-      return (<Appointment key={appointment.id} {...appointment} interviewers={interviewers}/>);
+    // console.log(dailyAppointments)
+      const interview = getInterview(state, appointment.interview); 
+      // console.log('beep', interview)
+      // return (<Appointment key={appointment.id} {...appointment}  interviewers={interviewers} />);
+      return (<Appointment key={appointment.id}  id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
+      />);
+
     });
+    
   // console.log(appointmentsList)
 
   //GET
@@ -37,7 +70,7 @@ export default function Application(props) {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      // console.log(all[1].data); 
+   
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
       
     });
@@ -66,7 +99,6 @@ export default function Application(props) {
       {appointmentsList}
       <Appointment key="last" time="5pm" />
       </section>
-      
     </main>
   );
 }

@@ -4,12 +4,13 @@ import Button from "../Button";
 import "components/Appointment/Form.scss";
 
 export default function Form(props) {
-const {interviewers} = props
+// const {interviewers} = props
 // console.log('this is form props', props)
 
 //STATES
 const [student, setStudent] = useState(props.student || "");
 const [interviewer, setInterviewer] = useState(props.interviewer || null);
+console.log('form interviewer', interviewer)
 
 //FUNCTIONS
 const reset = () => {
@@ -21,6 +22,10 @@ const cancel = () => {
   reset()
   props.onCancel()
 }
+
+// const onSave = () => {
+
+// }
 
   return (
 <main className="appointment__card appointment__card--create">
@@ -53,7 +58,7 @@ const cancel = () => {
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      <Button confirm onClick={props.onSave}>Save</Button>
+      <Button confirm onClick={()=>props.onSave(student, interviewer)}>Save</Button>
     </section>
   </section>
 </main>

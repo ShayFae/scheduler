@@ -1,4 +1,5 @@
 export function getAppointmentsForDay(state, day) {
+  // console.log('this is state', state)
   const daysFilter = state.days.filter(days => days.name === day);
   let matchData = [];
   for(let dayValue of daysFilter) {
@@ -10,6 +11,7 @@ export function getAppointmentsForDay(state, day) {
     //  n.forEach(j => {console.log('this is j', dayAppointments.includes(j.id),j)})
     findMatch.forEach(x => {
       if(dayAppointments.includes(x.id)) {
+        // console.log('this is x', x)
         matchData.push(x)
         // console.log(matchData)
       }
@@ -21,8 +23,9 @@ export function getAppointmentsForDay(state, day) {
     // console.log(stateAppointments)
     // const test = dayAppointments.filter(meep => meep == key);
   }
+    // console.log('This is match data', matchData)
+
   return matchData
-  // console.log(matchData)
 }
 
 export function getInterviewersForDay(state, day) {
@@ -41,27 +44,24 @@ export function getInterviewersForDay(state, day) {
     }
   }
   // console.log('this is match', matchData)
+  // console.log('meep', Object.values(interviewersData))
+  // console.log(interviewersData)
+
   return interviewersData
 }
 
 export function getInterview(state, interview) {
-  let obj = {}
+  let obj = {};
   // console.log('this is', interview)
   if(interview === null) {
     return null
   }
-  // console.log('this is state', state)
-  let interviewers = state.interviewers;
-  let justInterviewer = Object.values(interviewers)
-  // console.log(justInterviewers[0])
-  let justStudent = Object.values(interviewers)
-  // console.log(student[1].name)
-  // console.log(interviewers)
-  obj["interviewer"] = justInterviewer[0]
-  obj["student"] = justStudent[1].name;
-  // console.log(obj)
-  return obj;
-  // console.log('this is test',justInterviewers[0])
-  // console.log(state.interviewer)
-  // console.log(interview.interviewer)
+  if(state.interviewers[interview.interviewer]) {
+    obj["interviewer"] = state.interviewers[interview.interviewer];
+  }
+  obj["student"] = interview.student;
+  // console.log('this is interviewer ID', interview.interviewer)
+  // console.log('this is interviewers', state.interviewers)
+  // console.log('this is obj', obj)
+  return obj
 }
