@@ -7,30 +7,25 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: {},
-    // spots,
   });
 
   const setDay = day => setState({ ...state, day });
 
+  //ADD APPOINTMENT FUNCTION
   function bookInterview(id, interview) {
-    console.log('this is state', state.days)
-    console.log(interview)
+    console.log(state)
+
+    // console.log('this is state', state.days)
     // console.log(interview)
     const appointment = {
     ...state.appointments[id],
-    interview: { ...interview }
+    interview: { ...interview },
     };
 
     const appointments = {
     ...state.appointments,
     [id]: appointment
     };
-
-  // setState({...state, appointments});
-  // console.log(appointments)
-  // console.log(appointments.time)
-  // console.log('APPOINTMENT', appointment)
-
 
     return axios.put(`/api/appointments/${id}`, {interview}).then(() => {
       updateSpots()
@@ -42,7 +37,7 @@ export default function useApplicationData() {
 
   };
 
-
+  //DELETE APPOINTMENT FUNCTION
   function cancelInterview(id) {
     const appointment = {
     ...state.appointments[id],
@@ -58,6 +53,7 @@ export default function useApplicationData() {
     })
   }; 
 
+  //EDIT APPOINTMENT FUNCTION
   function editInterview(id, interview) {
   // console.log(id, interview)
     const appointment = {
@@ -70,27 +66,33 @@ export default function useApplicationData() {
     [id]: appointment
   };
 
-  // setState({...state, appointments});
-  // console.log(appointments)
-  // console.log(appointments.time)
-  // console.log('APPOINTMENT', appointment)
-  // updateSpots()
-
-
   return axios.update(`/api/appointments/${id}`, {interview}).then(() => {
     setState({...state, appointments});
     })
 
-
   };
 
-    function updateSpots() {
-    console.log('app', state)
-    for(let meep of state.days) {
-      console.log('days', meep.spots)
-    }
-    // const test = state.days.filter(meep => days.name === meep);
-    // console.log(test)
+  function updateSpots() {
+    let finalSpots = 0
+    const getDays = state.days
+    // console.log('get', getDays)
+    for(let day of getDays) {
+      // console.log('hello', day.appointments)
+      // console.log(state.day)
+      if(day.name === state.day) {
+        let getAppointment = day.appointments
+        const holdApp =  getAppointment.map(matchID => state.appointments[matchID].interview)
+        const nullInterview = holdApp.filter(findNull => findNull === null)
+        const spots = nullInterview.length
+        // console.log('this is spots left', spots)
+        finalSpots = spots
+        // console.log(holdApp)
+        // return spots
+     }
+   }
+    console.log('This many spots are left', finalSpots)
+    return finalSpots;
+
   }
   updateSpots()
 
