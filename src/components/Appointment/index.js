@@ -7,6 +7,7 @@ import Form from './Form';
 import useVisualMode from 'hooks/useVisualMode';
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 
 //MODE CONSTANTS
 const EMPTY = "EMPTY";
@@ -16,6 +17,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
   // console.log(props.interview.interviewer)
@@ -31,20 +34,28 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    transition(SAVING)
+    transition(SAVING);
 
-      props.bookInterview(props.id, interview)
-      .then(() => transition(SHOW));
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
     // console.log('STUDENT', interview.student)
     // console.log('interviewer', interview.interviewer)
+      .catch((error) => {
+      transition(ERROR_SAVE, true)
+    });
   };
 
   //If confirmed it will then delete
   function cancel() {
     transition(DELETING);
 
-      props.cancelInterview(props.id)
-      .then(() => transition(EMPTY));
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch((error) => {
+        transition(ERROR_DELETE, true)
+      });
   }
 
   //Once trashcan Icon is clicked it will goto CONFIRM MODE
@@ -75,6 +86,9 @@ export default function Appointment(props) {
             onEdit={edit}
           />
         )}
+        {mode === ERROR_SAVE && <Error message="Could not save appointment" onClose={() => back(SHOW)}/>}
+        {mode === ERROR_DELETE && <Error message="Could not delete appointment" onClose={() => back(SHOW)}/>}
+
         {mode === DELETING && <Status message="DELETING" />}
         {mode === SAVING && <Status message="SAVING" />}
         {mode === CREATE && (<Form interviewers={interviewers}  onCancel={() => back(EMPTY)} onSave={save}/>)}       
