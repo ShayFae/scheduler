@@ -6,7 +6,8 @@ export default function useApplicationData() {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: {},
+    // spots,
   });
 
   const setDay = day => setState({ ...state, day });
@@ -29,11 +30,13 @@ export default function useApplicationData() {
   // console.log(appointments)
   // console.log(appointments.time)
   // console.log('APPOINTMENT', appointment)
-  // updateSpots()
 
 
     return axios.put(`/api/appointments/${id}`, {interview}).then(() => {
+      updateSpots()
+
       setState({...state, appointments});
+
       })
 
 
@@ -81,15 +84,15 @@ export default function useApplicationData() {
 
   };
 
-    // function updateSpots() {
-  //   console.log('app', state.appointments)
-  //   for(let meep of state.days) {
-  //     console.log('...', meep)
-  //   }
-  //   // const test = state.days.filter(meep => days.name === meep);
-  //   // console.log(test)
-  // }
-  // updateSpots()
+    function updateSpots() {
+    console.log('app', state)
+    for(let meep of state.days) {
+      console.log('days', meep.spots)
+    }
+    // const test = state.days.filter(meep => days.name === meep);
+    // console.log(test)
+  }
+  updateSpots()
 
   //GET
   useEffect(() => {
@@ -99,6 +102,8 @@ export default function useApplicationData() {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
       ]).then((all) => {
+        // console.log('this data', all[0].data)
+  
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
         });
       });
