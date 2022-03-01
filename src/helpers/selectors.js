@@ -29,24 +29,26 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterviewersForDay(state, day) {
+  console.log('this is state', state)
   const interviewerFilter = state.days.filter(days => days.name === day);
   let interviewersData = [];
   for(let interviewersVal of interviewerFilter) { 
-    let InterviewersApp = interviewersVal.appointments
+    // console.log('testVal',interviewersVal.interviewers)
+    let InterviewersApp = interviewersVal.interviewers;
     let stateApp = state.interviewers
+    // console.log('testing', stateApp)
     for (const [key, appointValue] of Object.entries(stateApp)) {
     let findMatch = [appointValue] 
+    // console.log('FIND', findMatch)
     findMatch.forEach(x => { 
-      if(InterviewersApp.includes(x.id)) {
+      if(InterviewersApp.includes(x.id)) { 
+        // console.log('this is x', x)
         interviewersData.push(x)
       }
     })
     }
   }
-  // console.log('this is match', matchData)
-  // console.log('meep', Object.values(interviewersData))
-  // console.log(interviewersData)
-
+  // console.log('this is interviewDATA', interviewersData)
   return interviewersData
 }
 

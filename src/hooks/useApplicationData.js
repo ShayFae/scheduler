@@ -12,7 +12,9 @@ export default function useApplicationData() {
   const setDay = day => setState({ ...state, day });
 
   function bookInterview(id, interview) {
-  // console.log(id, interview)
+    console.log('this is state', state.days)
+    console.log(interview)
+    // console.log(interview)
     const appointment = {
     ...state.appointments[id],
     interview: { ...interview }
@@ -27,10 +29,14 @@ export default function useApplicationData() {
   // console.log(appointments)
   // console.log(appointments.time)
   // console.log('APPOINTMENT', appointment)
+  // updateSpots()
+
 
     return axios.put(`/api/appointments/${id}`, {interview}).then(() => {
       setState({...state, appointments});
       })
+
+
   };
 
 
@@ -65,11 +71,25 @@ export default function useApplicationData() {
   // console.log(appointments)
   // console.log(appointments.time)
   // console.log('APPOINTMENT', appointment)
+  // updateSpots()
+
 
   return axios.update(`/api/appointments/${id}`, {interview}).then(() => {
     setState({...state, appointments});
     })
+
+
   };
+
+    // function updateSpots() {
+  //   console.log('app', state.appointments)
+  //   for(let meep of state.days) {
+  //     console.log('...', meep)
+  //   }
+  //   // const test = state.days.filter(meep => days.name === meep);
+  //   // console.log(test)
+  // }
+  // updateSpots()
 
   //GET
   useEffect(() => {

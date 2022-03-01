@@ -4,13 +4,11 @@ import Button from "../Button";
 import "components/Appointment/Form.scss";
 
 export default function Form(props) {
-// const {interviewers} = props
-// console.log('this is form props', props)
+const {interviewers} = props
 
 //STATES
 const [student, setStudent] = useState(props.student || "");
 const [interviewer, setInterviewer] = useState(props.interviewer || null);
-// console.log('form interviewer', interviewer)
 
 //FUNCTIONS
 const reset = () => {
@@ -22,7 +20,7 @@ const cancel = () => {
   reset()
   props.onCancel()
 }
-
+// console.log('form interviewers', props.interviewers)
 // const onSave = () => {
 
 // }
@@ -49,7 +47,7 @@ const cancel = () => {
     <InterviewerList
        value={interviewer}
        //interviewers listed
-       interviewers={props.interviewers}
+       interviewers={interviewers}
        //When clicked it will then set a new state to whatever interviewer id was chosen
        onChange={setInterviewer}
       //  onClick={setInterviewer}
