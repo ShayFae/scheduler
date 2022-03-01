@@ -36,10 +36,10 @@ export function getInterviewersForDay(state, day) {
     // console.log('testVal',interviewersVal.interviewers)
     let InterviewersApp = interviewersVal.interviewers;
     let stateApp = state.interviewers
-    // console.log('testing', stateApp)
     for (const [key, appointValue] of Object.entries(stateApp)) {
     let findMatch = [appointValue] 
     // console.log('FIND', findMatch)
+    // console.log('match', InterviewersApp)
     findMatch.forEach(x => { 
       if(InterviewersApp.includes(x.id)) { 
         // console.log('this is x', x)
