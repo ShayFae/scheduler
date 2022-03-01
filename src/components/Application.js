@@ -60,6 +60,30 @@ export default function Application(props) {
      })
   } 
 
+  
+  function editInterview(id, interview) {
+    // console.log(id, interview)
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // setState({...state, appointments});
+    // console.log(appointments)
+    // console.log(appointments.time)
+    // console.log('APPOINTMENT', appointment)
+
+     return axios.update(`/api/appointments/${id}`, {interview}).then(() => {
+      setState({...state, appointments});
+     })
+   };
+
+
 
   //  { interview }
   const appointmentsList = dailyAppointments.map(appointment => {  
@@ -73,6 +97,7 @@ export default function Application(props) {
         interviewers={interviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        editInterview={editInterview}
       />);
 
     });

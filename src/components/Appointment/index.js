@@ -15,9 +15,10 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const EDIT = "EDIT";
 
 export default function Appointment(props) {
-
+  // console.log(props.interview.interviewer)
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -43,14 +44,23 @@ export default function Appointment(props) {
     transition(DELETING);
 
       props.cancelInterview(props.id)
-      .then(() => transition(EMPTY))
+      .then(() => transition(EMPTY));
   }
 
   //Once trashcan Icon is clicked it will goto CONFIRM MODE
   function confirm() {
-    transition(CONFIRM)
+    transition(CONFIRM);
   }
- 
+
+  //Fix SELECTED interviewer in EDIT 
+  //Fix CREATE needs to highlight selected interviews
+  function edit() {
+    transition(EDIT);
+  }
+
+  //Interviewer highlight target ID
+  // interviewer={props.interview.interviewer.id}
+
   return (
     <Fragment>
       <article className="appointment">
@@ -62,12 +72,14 @@ export default function Appointment(props) {
             student={props.interview.student}
             interviewer={props.interview.interviewer}
             onDelete={confirm}
+            onEdit={edit}
           />
         )}
         {mode === DELETING && <Status message="DELETING" />}
         {mode === SAVING && <Status message="SAVING" />}
         {mode === CREATE && (<Form interviewers={interviewers}  onCancel={() => back(EMPTY)} onSave={save}/>)}       
         {mode === CONFIRM && <Confirm message="Are you sure you want to DELETE?" onConfirm={cancel} onCancel={() => back(EMPTY)} />}
+        {mode === EDIT && (<Form interviewers={interviewers} interviewer={props.interview.interviewer.id} student={props.interview.student} onCancel={() => back(SHOW)} onSave={save}/>)}       
       </article>
     </Fragment>
   );
