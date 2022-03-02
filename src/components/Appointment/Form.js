@@ -57,13 +57,11 @@ function validate() {
        interviewers={interviewers}
        //When clicked it will then set a new state to whatever interviewer id was chosen
        onChange={setInterviewer}
-      //  onClick={setInterviewer}
     />
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-      {/* <Button confirm onClick={()=>props.onSave(student, interviewer)}>Save</Button> */}
       <Button confirm onClick={validate}>Save</Button>
     </section>
   </section>

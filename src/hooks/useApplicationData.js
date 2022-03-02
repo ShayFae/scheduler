@@ -66,23 +66,15 @@ export default function useApplicationData() {
 
   function updateSpots() {
     const getDays = [...state.days];
-    // console.log('get', getDays)
     for(let day of getDays) {
-      // console.log('hello', day.appointments)
-      // console.log('DAYVAL', day.spots)
-      // console.log(state.day)
       if(day.name === state.day) {
         let getAppointment = day.appointments
-        const holdApp =  getAppointment.map(matchID => state.appointments[matchID].interview)
-        const nullInterview = holdApp.filter(findNull => findNull === null)
-        const spots = nullInterview.length
-        // console.log('this is spots left', spots)
-        day.spots = spots
-        // console.log(holdApp)
-        // return spots
+        const holdApp =  getAppointment.map(matchID => state.appointments[matchID].interview);
+        const nullInterview = holdApp.filter(findNull => findNull === null);
+        const spots = nullInterview.length;
+        day.spots = spots;
      }
    }
-    // console.log('This many spots are left', getDays)
     return getDays;
   }
   updateSpots()
@@ -94,9 +86,7 @@ export default function useApplicationData() {
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
-      ]).then((all) => {
-        // console.log('this data', all[0].data)
-  
+      ]).then((all) => {  
         setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
         });
       });

@@ -21,12 +21,10 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
-  // console.log(props.interview.interviewer)
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
   const {interviewers, student} = props
-  // console.log(props.interview)
   
   //Takes in user input infromation and puts it into the api 
   function save(name, interviewer) {
@@ -39,8 +37,6 @@ export default function Appointment(props) {
     props
       .bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-    // console.log('STUDENT', interview.student)
-    // console.log('interviewer', interview.interviewer)
       .catch((error) => {
       transition(ERROR_SAVE, true)
     });
@@ -63,20 +59,15 @@ export default function Appointment(props) {
     transition(CONFIRM);
   }
 
-  //Fix SELECTED interviewer in EDIT 
-  //Fix CREATE needs to highlight selected interviews
+  //Once user clicks clipboard icon it will goto EDIT MODE
   function edit() {
     transition(EDIT);
   }
-
-  //Interviewer highlight target ID
-  // interviewer={props.interview.interviewer.id}
 
   return (
     <Fragment>
       <article className="appointment">
         <Header time={props.time}/>
-        {/* {pickDisplay()} */}
         {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
         {mode === SHOW && (
           <Show
@@ -86,14 +77,16 @@ export default function Appointment(props) {
             onEdit={edit}
           />
         )}
+
         {mode === ERROR_SAVE && <Error message="Could not save appointment" onClose={() => back(SHOW)}/>}
         {mode === ERROR_DELETE && <Error message="Could not delete appointment" onClose={() => back(SHOW)}/>}
 
         {mode === DELETING && <Status message="DELETING" />}
         {mode === SAVING && <Status message="SAVING" />}
-        {mode === CREATE && (<Form interviewers={interviewers}  onCancel={() => back(EMPTY)} onSave={save}/>)}       
         {mode === CONFIRM && <Confirm message="Are you sure you want to DELETE?" onConfirm={cancel} onCancel={() => back(EMPTY)} />}
-        {mode === EDIT && (<Form interviewers={interviewers} interviewer={props.interview.interviewer.id} student={props.interview.student} onCancel={() => back(SHOW)} onSave={save}/>)}       
+
+        {mode === CREATE && (<Form interviewers={interviewers}  onCancel={() => back(EMPTY)} onSave={save}/>)}       
+        {mode === EDIT && (<Form interviewers={interviewers} interviewer={props.interview.interviewer.id} student={props.interview.student} onCancel={() => back(SHOW)} onSave={save}/>)}    
       </article>
     </Fragment>
   );

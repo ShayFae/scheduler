@@ -4,12 +4,14 @@ import InterviewerListItem from "./InterviewerListItem";
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
+  //When user clicks on an interviewer it will highlight and show their name
   const interviewerList = props.interviewers.map(interviewer => <InterviewerListItem key={interviewer.id} setInterviewer={() => props.onChange(interviewer.id)} selected={interviewer.id === props.value} {...interviewer}/>);
   
   //Validation
   InterviewerList.propTypes = {
     interviewers: PropTypes.array.isRequired
   };
+  
   return (
     <section className="interviewers">
       <h4 className="interviewers__header text--light">Interviewer</h4>

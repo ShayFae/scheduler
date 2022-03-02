@@ -6,8 +6,8 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 import useApplicationData from "hooks/useApplicationData"
 
 export default function Application(props) {
-  // console.log(state.interviewers)
 
+  //IMPORTED FUNCTIONS
   const {
     state,
     setDay,
@@ -16,13 +16,12 @@ export default function Application(props) {
     editInterview,
   } = useApplicationData();
 
+  //SELECTORS
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const interviewers = getInterviewersForDay(state, state.day);
-  // console.log('interviewers', interviewers)
-  //SATE FUNCTIONS
 
+  //Appointment List
   const appointmentsList = dailyAppointments.map(appointment => {  
-    // console.log(dailyAppointments)
       const interview = getInterview(state, appointment.interview); 
       return (<Appointment key={appointment.id}  id={appointment.id}
         time={appointment.time}
@@ -35,7 +34,6 @@ export default function Application(props) {
 
     });
     
-  // console.log(appointmentsList)
   return (
     <main className="layout">
       <section className="sidebar">
