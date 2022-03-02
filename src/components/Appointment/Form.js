@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InterviewerList from "../InterviewerList";
 import Button from "../Button";
-import "components/Appointment/Form.scss";
+// import "components/Appointment/Form.scss";
 
 export default function Form(props) {
 const {interviewers} = props

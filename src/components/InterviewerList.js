@@ -4,7 +4,7 @@ import InterviewerListItem from "./InterviewerListItem";
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
-  const interviewerList = props.interviewers.map(interviewer => <InterviewerListItem key={interviewer.id} setInterviewer={() => props.onChange(interviewer.id)} selected={interviewer.id === props.interviewer} {...interviewer}/>);
+  const interviewerList = props.interviewers.map(interviewer => <InterviewerListItem key={interviewer.id} setInterviewer={() => props.onChange(interviewer.id)} selected={interviewer.id === props.value} {...interviewer}/>);
   
   //Validation
   InterviewerList.propTypes = {

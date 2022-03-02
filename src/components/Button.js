@@ -10,19 +10,9 @@ export default function Button(props) {
       "button--danger": props.danger
     });
 
-// function buttonClassFunc () {
-//    let buttonClass = 'button ';
-//    if (props.confirm) {
-//       buttonClass += classNames('button',{'button--confirm': true})
-//    } else if(props.danger) {
-//       buttonClass += classNames('button',{'button--danger': true})
-//    }
-//    return <button className={buttonClass} disabled={props.disabled} onClick={props.onClick}>{props.children}</button>;
-// }
    return (
          <>
-         {/* {buttonClassFunc()}; */}
-         <button className={buttonClass} disabled={props.disabled} onClick={props.onClick}>{props.children}</button>;
+         <button className={buttonClass} disabled={props.disabled} onClick={props.onClick}>{props.children}</button>
          </>
          );
 }
