@@ -21,7 +21,9 @@ Scheduler project that allows a user to book interviews, they are free to cancel
 
 ## Dependencies
 > axios
+
 > @testing-library/react-hooks
+
 > react-test-renderer
 
 ## Setup
