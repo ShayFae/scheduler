@@ -1,7 +1,12 @@
 # Interview Scheduler
 Scheduler project that allows a user to book interviews, they are free to cancel, edit or delete an interview as well. The days will visibly change depending on how many interview spots are avalible to the user on a certain day.
 
-<!-- [Scheduler Page]() -->
+## Final Product
+![Scheduler Page](https://github.com/ShayFae/scheduler/blob/master/docs/scheduler-first-resize.png?raw=true)
+
+![Scheduler Form](https://github.com/ShayFae/scheduler/blob/master/docs/scheduler-form-resize.png?raw=true)
+
+![Scheduler Features](https://github.com/ShayFae/scheduler/blob/master/docs/scheduler-features-resize.png?raw=true)
 
 ## List of documentations or examples
 [React Documentation](https://reactjs.org/docs/getting-started.html)
