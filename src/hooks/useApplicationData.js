@@ -13,10 +13,6 @@ export default function useApplicationData() {
 
   //ADD APPOINTMENT FUNCTION
   function bookInterview(id, interview) {
-    console.log(state)
-
-    // console.log('this is state', state.days)
-    // console.log(interview)
     const appointment = {
     ...state.appointments[id],
     interview: { ...interview },
@@ -29,12 +25,8 @@ export default function useApplicationData() {
 
     return axios.put(`/api/appointments/${id}`, {interview}).then(() => {
       updateSpots()
-
       setState({...state, appointments});
-
       })
-
-
   };
 
   //DELETE APPOINTMENT FUNCTION
@@ -73,11 +65,11 @@ export default function useApplicationData() {
   };
 
   function updateSpots() {
-    let finalSpots = 0
-    const getDays = state.days
+    const getDays = [...state.days];
     // console.log('get', getDays)
     for(let day of getDays) {
       // console.log('hello', day.appointments)
+      // console.log('DAYVAL', day.spots)
       // console.log(state.day)
       if(day.name === state.day) {
         let getAppointment = day.appointments
@@ -85,14 +77,13 @@ export default function useApplicationData() {
         const nullInterview = holdApp.filter(findNull => findNull === null)
         const spots = nullInterview.length
         // console.log('this is spots left', spots)
-        finalSpots = spots
+        day.spots = spots
         // console.log(holdApp)
         // return spots
      }
    }
-    console.log('This many spots are left', finalSpots)
-    return finalSpots;
-
+    // console.log('This many spots are left', getDays)
+    return getDays;
   }
   updateSpots()
 
